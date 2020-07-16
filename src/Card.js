@@ -10,7 +10,6 @@ class Card extends React.Component {
             todo: props.word
         }
     }
-
     edit = () => {
         if (this.state.status) {
             this.setState({
@@ -42,13 +41,15 @@ class Card extends React.Component {
             <div className="card" id="card">
                 <div className="card-body">
                     <div className="input-group mb-3">
+
                         {element}
+
                         <div className="input-group-append col-xs-4">
                             <button className="btn btn-outline-info" onClick={() => { this.edit() }}>{this.state.button}</button>
                             <button className="btn btn-outline-danger" onClick={() => { buttonDelete(index) }}>Remove</button>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         )
