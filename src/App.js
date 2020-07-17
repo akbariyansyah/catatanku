@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './Card'
 import Header from './Header'
+import swal from 'sweetalert';
 class App extends React.Component {
   state = {
     word: "",
@@ -13,26 +14,31 @@ class App extends React.Component {
     })
   }
   buttonDelete = (index) => {
-    /* eslint no-restricted-globals:0 */
-    let validation = confirm("anda yakin ingin menghapus to-do ini ?")
-    if (validation) {
-      delete this.state.defaultScreen[index]
-      this.setState({
-        defaultScreen: this.state.defaultScreen
-      })
-    }
+    
+    swal("Anda yakin ingin menghapus to-do ini ?", {
+      buttons: ["ga jadi", "Oke..."],
+    }).then((willDelete) => {
+      if (willDelete) {
+        this.state.defaultScreen.splice(index,1)
+        this.setState({
+          defaultScreen: this.state.defaultScreen
+        })
+      }
+    })
+   
   }
   buttonClear = () => {
-    /* eslint no-restricted-globals:0 */
-    let validation = confirm("anda yakin ingin menghapus semua to-do ?")
-    if (validation) {
-      this.setState({
-        defaultScreen: []
-      })
-    }
+   
+      let validation = window.confirm("anda yakin ingin menghapus semua to-do ?")
+      if (validation) {
+        this.setState({
+          defaultScreen: []
+        })
+      }
   }
   buttonAdd = () => {
     if (this.state.word === "") {
+      alert("input tidak boleh kosong")
       this.setState({
         card: false,
         defaultScreen: []
@@ -49,7 +55,6 @@ class App extends React.Component {
         word: ""
       })
     }
-    console.log(this.state.word)
   }
   render() {
     let display;
