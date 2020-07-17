@@ -35,7 +35,9 @@ class App extends React.Component {
         this.setState({
           defaultScreen: []
         })
+        swal("Good job!", "Semua to-do berhasil dihapus!", "success");
       }
+     
     })
 
   }
@@ -53,8 +55,6 @@ class App extends React.Component {
       this.setState({
         card: true,
         defaultScreen: this.state.defaultScreen,
-      })
-      this.setState({
         word: ""
       })
     }
