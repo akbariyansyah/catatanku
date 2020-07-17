@@ -13,7 +13,7 @@ class App extends React.Component {
     })
   }
   buttonDelete = (index) => {
-    //eslint-disable-next-line no-restricted-globals
+    /* eslint no-restricted-globals:0 */
     let validation = confirm("anda yakin ingin menghapus ini ?")
     if (validation) {
       delete this.state.defaultScreen[index]
@@ -21,9 +21,6 @@ class App extends React.Component {
         defaultScreen: this.state.defaultScreen
       })
     }
-    console.log(validation)
-
-
   }
   buttonClear = () => {
     this.setState({
@@ -38,20 +35,22 @@ class App extends React.Component {
       })
     } else {
       this.state.defaultScreen.push({
-        word: this.state.word
+        word: this.state.word,
       })
       this.setState({
         card: true,
-        defaultScreen: this.state.defaultScreen
+        defaultScreen: this.state.defaultScreen,
+      })
+      this.setState({
+        word: ""
       })
     }
-
-
+    console.log(this.state.word)
   }
   render() {
     let display;
     if (this.state.card) {
-      display = this.state.defaultScreen.map((data, index) => <Card word={this.state.word} index={index} buttonDelete={this.buttonDelete} />)
+      display = this.state.defaultScreen.map((data, index) => <Card word={data.word} index={index} buttonDelete={this.buttonDelete} />)
     }
     return (
       <div className="container" id="container">
@@ -60,7 +59,7 @@ class App extends React.Component {
 
           <div className="card-body">
             <div className="input-group mb-3">
-              <input type="text" name="word" autoComplete="off" value={this.state.word} onChange={this.handleInputChange} />
+              <input type="text" className="inputForm" name="word" placeholder="input new to-do..." autoComplete="off" value={this.state.word} onChange={this.handleInputChange} />
 
               <div className="input-group-append col-xs-4">
                 <button className="btn btn-outline-primary btn-lg" onClick={this.buttonAdd}>Add Todo's</button>
@@ -73,7 +72,7 @@ class App extends React.Component {
         <div className="card mt-3 mb-3">
           <div className="card-body">
             <div className="display-4">
-              To-do list : 
+              To-do list :
         </div>
           </div>
         </div>
