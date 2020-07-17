@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import swal from 'sweetalert';
 
 class Card extends React.Component {
     constructor(props) {
@@ -12,11 +13,13 @@ class Card extends React.Component {
     }
     edit = () => {
         if (this.state.status) {
+            swal("Good Job !","to-do berhasil diubah !","success");
             this.setState({
                 status: false,
                 button: "Edit"
             })
         } else {
+            
             this.setState({
                 status: true,
                 button: "Save"

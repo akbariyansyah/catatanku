@@ -25,20 +25,22 @@ class App extends React.Component {
         })
       }
     })
-   
   }
   buttonClear = () => {
-   
-      let validation = window.confirm("anda yakin ingin menghapus semua to-do ?")
-      if (validation) {
+    swal("anda yakin ingin menghapus semua to-do ?", {
+      buttons: ["ga jadi", "Oke..."],
+    }).then((willDelete) => {
+      if (willDelete) {
         this.setState({
           defaultScreen: []
         })
       }
+    })
+   
   }
   buttonAdd = () => {
     if (this.state.word === "") {
-      alert("input tidak boleh kosong")
+      swal("Input tidak boleh kosong !");
       this.setState({
         card: false,
         defaultScreen: []
