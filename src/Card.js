@@ -40,6 +40,7 @@ class Card extends React.Component {
         return (
             <div className="card" id="card">
                 <div className="card-body">
+                    <div className="lead mb-3">To-do {index + 1}</div>
                     <div className="input-group mb-3">
 
                         {element}

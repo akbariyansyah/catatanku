@@ -13,10 +13,17 @@ class App extends React.Component {
     })
   }
   buttonDelete = (index) => {
-    delete this.state.defaultScreen[index]
-    this.setState({
-      defaultScreen: this.state.defaultScreen
-    })
+    //eslint-disable-next-line no-restricted-globals
+    let validation = confirm("anda yakin ingin menghapus ini ?")
+    if (validation) {
+      delete this.state.defaultScreen[index]
+      this.setState({
+        defaultScreen: this.state.defaultScreen
+      })
+    }
+    console.log(validation)
+
+
   }
   buttonClear = () => {
     this.setState({
@@ -47,7 +54,7 @@ class App extends React.Component {
       display = this.state.defaultScreen.map((data, index) => <Card word={this.state.word} index={index} buttonDelete={this.buttonDelete} />)
     }
     return (
-      <div className="container">
+      <div className="container" id="container">
         <Header />
         <div className="card" id="card">
 
@@ -61,6 +68,13 @@ class App extends React.Component {
               </div>
 
             </div>
+          </div>
+        </div>
+        <div className="card mt-3 mb-3">
+          <div className="card-body">
+            <div className="display-4">
+              To-do list : 
+        </div>
           </div>
         </div>
 
