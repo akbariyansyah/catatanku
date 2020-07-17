@@ -14,15 +14,16 @@ class App extends React.Component {
     })
   }
   buttonDelete = (index) => {
-    
+
     swal("Anda yakin ingin menghapus to-do ini ?", {
       buttons: ["ga jadi", "Oke..."],
     }).then((willDelete) => {
       if (willDelete) {
-        this.state.defaultScreen.splice(index,1)
+        delete this.state.defaultScreen[index]
         this.setState({
           defaultScreen: this.state.defaultScreen
         })
+        swal("Good job!", "To-do berhasil dihapus !", "success");
       }
     })
   }
@@ -36,7 +37,7 @@ class App extends React.Component {
         })
       }
     })
-   
+
   }
   buttonAdd = () => {
     if (this.state.word === "") {
