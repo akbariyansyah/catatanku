@@ -14,7 +14,7 @@ class App extends React.Component {
   }
   buttonDelete = (index) => {
     /* eslint no-restricted-globals:0 */
-    let validation = confirm("anda yakin ingin menghapus ini ?")
+    let validation = confirm("anda yakin ingin menghapus to-do ini ?")
     if (validation) {
       delete this.state.defaultScreen[index]
       this.setState({
@@ -23,9 +23,13 @@ class App extends React.Component {
     }
   }
   buttonClear = () => {
-    this.setState({
-      defaultScreen: []
-    })
+    /* eslint no-restricted-globals:0 */
+    let validation = confirm("anda yakin ingin menghapus semua to-do ?")
+    if (validation) {
+      this.setState({
+        defaultScreen: []
+      })
+    }
   }
   buttonAdd = () => {
     if (this.state.word === "") {
