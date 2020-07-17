@@ -37,12 +37,14 @@ class App extends React.Component {
         })
         swal("Good job!", "Semua to-do berhasil dihapus!", "success");
       }
-     
+
     })
 
   }
   buttonAdd = () => {
-    if (this.state.word === "") {
+    if (this.state.word === "" && this.state.defaultScreen !== []) {
+      swal("Input tidak boleh kosong !");
+    } else if (this.state.word === "") {
       swal("Input tidak boleh kosong !");
       this.setState({
         card: false,
