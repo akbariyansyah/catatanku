@@ -11,6 +11,7 @@ const App: React.FC<AppProps> = () => {
     title: "",
     showCard: false,
     values: [] as TodoItem[],
+    doneTodos: [] as TodoItem[],
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,14 +71,35 @@ const App: React.FC<AppProps> = () => {
     }
   };
 
-  let display;
+  const done = (todo: TodoItem) => {
+    setState({
+      ...state,
+      doneTodos: [...state.doneTodos, { word: todo.word }],
+      values: state.values.filter(item => item.word !== todo.word) // Remove from values
+    });
+  }
+
+  let progressCards, doneCards;
   if (state.showCard) {
-    display = state.values.map((data, index) => 
+    progressCards = state.values.map((data, index) => 
       <Card 
         key={index} 
         title={data.word} 
         index={index} 
         buttonDelete={remove} 
+        buttonDone={done}
+      />
+    );
+  }
+
+  if (state.doneTodos.length > 0) {
+    doneCards = state.doneTodos.map((data, index) =>
+      <Card 
+        key={index} 
+        title={data.word} 
+        index={index} 
+        buttonDelete={remove} 
+        buttonDone={done}
       />
     );
   }
@@ -121,7 +143,15 @@ const App: React.FC<AppProps> = () => {
           </div>
         </div>
       </div>
-      {display}
+      {progressCards}
+      <div className="card mt-3 mb-3">
+        <div className="card-body">
+          <div className="display-4">
+            Done list :
+          </div>
+        </div>
+      </div>
+      {doneCards}
     </div>
   );
 };
