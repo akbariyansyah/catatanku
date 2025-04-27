@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
-
+import { TodoItem } from "./types/todo";
 interface CardProps {
   title: string;
   index: number;
   buttonDelete: (index:number) => void;
+  buttonDone: (todo: TodoItem) => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, index, buttonDelete }) => {
+const Card: React.FC<CardProps> = ({ title, index, buttonDelete, buttonDone }) => {
   const [state, setState] = useState({
     status: false,
     button: "Edit",
@@ -66,6 +67,9 @@ const Card: React.FC<CardProps> = ({ title, index, buttonDelete }) => {
         <div className="input-group mb-3">
           {element}
           <div className="input-group-append col-xs-4">
+            <button className="btn btn-outline-success" onClick={() => buttonDone({ word: title })}>
+              Set as done
+            </button>
             <button 
               className="btn btn-outline-info" 
               onClick={edit}
