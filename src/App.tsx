@@ -42,7 +42,7 @@ class App extends React.Component {
 
   }
   buttonAdd = () => {
-    if (this.state.word === "" && this.state.defaultScreen !== []) {
+    if (this.state.word === "") {
       swal("Input tidak boleh kosong !");
     } else if (this.state.word === "") {
       swal("Input tidak boleh kosong !");
