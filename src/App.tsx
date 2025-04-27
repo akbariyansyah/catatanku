@@ -1,102 +1,129 @@
-import React from 'react';
-import Card from './Card'
-import Header from './Header'
+import React, { useState } from 'react';
+import Card from './Card';
+import Header from './Header';
 import swal from 'sweetalert';
-class App extends React.Component {
-  state = {
-    word: "",
-    card: false,
-    defaultScreen: [],
-  }
-  handleInputChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-  buttonDelete = (index) => {
+import { TodoItem, AppProps } from './types/todo';
 
+
+
+const App: React.FC<AppProps> = () => {
+  const [state, setState] = useState({
+    title: "",
+    showCard: false,
+    values: [] as TodoItem[],
+  });
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value, event.target.name);
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const remove = (index: number) => {
     swal("Anda yakin ingin menghapus to-do ini ?", {
       buttons: ["ga jadi", "Oke..."],
     }).then((willDelete) => {
       if (willDelete) {
-        delete this.state.defaultScreen[index]
-        this.setState({
-          defaultScreen: this.state.defaultScreen
-        })
-        swal("Good job!", "To-do berhasil dihapus !", "success");
+        const updatedScreen = [...state.values];
+        updatedScreen.splice(index, 1);
+        
+        setState({
+          ...state,
+          values: updatedScreen
+        });
+
       }
-    })
-  }
-  buttonClear = () => {
+    });
+  };
+
+  const clear = () => {
     swal("anda yakin ingin menghapus semua to-do ?", {
       buttons: ["ga jadi", "Oke..."],
     }).then((willDelete) => {
       if (willDelete) {
-        this.setState({
-          defaultScreen: []
-        })
-        swal("Good job!", "Semua to-do berhasil dihapus!", "success");
+        setState({
+          ...state,
+          values: []
+        });
       }
+    });
+  };
 
-    })
-
-  }
-  buttonAdd = () => {
-    if (this.state.word === "") {
+  const add = () => {
+    if (state.title === "") {
       swal("Input tidak boleh kosong !");
-    } else if (this.state.word === "") {
-      swal("Input tidak boleh kosong !");
-      this.setState({
-        card: false,
-        defaultScreen: []
-      })
     } else {
-      this.state.defaultScreen.push({
-        word: this.state.word,
-      })
-      this.setState({
-        card: true,
-        defaultScreen: this.state.defaultScreen,
-        word: ""
-      })
+      // Create a new array instead of mutating the existing one
+      const updatedScreen = [
+        ...state.values,
+        { word: state.title }
+      ];
+      
+      setState({
+        ...state,
+        showCard: true,
+        values: updatedScreen,
+        title: ""
+      });
     }
+  };
+
+  let display;
+  if (state.showCard) {
+    display = state.values.map((data, index) => 
+      <Card 
+        key={index} 
+        title={data.word} 
+        index={index} 
+        buttonDelete={remove} 
+      />
+    );
   }
-  render() {
-    let display;
-    if (this.state.card) {
-      display = this.state.defaultScreen.map((data, index) => <Card word={data.word} index={index} buttonDelete={this.buttonDelete} />)
-    }
-    return (
-      <div className="container" id="container">
-        <Header />
-        <div className="card" id="card">
 
-          <div className="card-body">
-            <div className="input-group mb-3">
-              <input type="text" className="inputForm" name="word" placeholder="input new to-do..." autoComplete="off" value={this.state.word} onChange={this.handleInputChange} />
-
-              <div className="input-group-append col-xs-4">
-                <button className="btn btn-outline-primary btn-lg" onClick={this.buttonAdd}>Add Todo's</button>
-                <button className="btn btn-outline-warning btn-lg" onClick={this.buttonClear}>Clear Todo's</button>
-              </div>
-
+  return (
+    <div className="container" id="container">
+      <Header />
+      <div className="card" id="card">
+        <div className="card-body">
+          <div className="input-group mb-3">
+            <input 
+              type="text" 
+              className="inputForm" 
+              name="title" 
+              placeholder="input new to-do..." 
+              autoComplete="off" 
+              value={state.title} 
+              onChange={handleInputChange} 
+            />
+            <div className="input-group-append col-xs-4">
+              <button 
+                className="btn btn-outline-primary btn-lg" 
+                onClick={add}
+              >
+                Add Todo's
+              </button>
+              <button 
+                className="btn btn-outline-warning btn-lg" 
+                onClick={clear}
+              >
+                Clear Todo's
+              </button>
             </div>
           </div>
         </div>
-        <div className="card mt-3 mb-3">
-          <div className="card-body">
-            <div className="display-4">
-              To-do list :
-        </div>
+      </div>
+      <div className="card mt-3 mb-3">
+        <div className="card-body">
+          <div className="display-4">
+            To-do list :
           </div>
         </div>
-
-        {display}
       </div>
-
-    )
-  }
-
-}
+      {display}
+    </div>
+  );
+};
 
 export default App;
