@@ -4,11 +4,12 @@ import { TodoItem } from "./types/todo";
 interface CardProps {
   title: string;
   index: number;
-  buttonDelete: (index:number) => void;
+  buttonDelete: (index: number) => void;
   buttonDone: (todo: TodoItem) => void;
+  showButton: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ title, index, buttonDelete, buttonDone }) => {
+const Card: React.FC<CardProps> = ({ title, index, buttonDelete, buttonDone, showButton }) => {
   const [state, setState] = useState({
     status: false,
     button: "Edit",
@@ -41,25 +42,44 @@ const Card: React.FC<CardProps> = ({ title, index, buttonDelete, buttonDone }) =
   let element;
   if (state.status) {
     element = (
-      <input 
-        type="text" 
-        name="todo" 
-        className="form-control" 
-        value={state.todo} 
-        onChange={handleInputChange} 
+      <input
+        type="text"
+        name="todo"
+        className="form-control"
+        value={state.todo}
+        onChange={handleInputChange}
       />
     );
   } else {
     element = (
-      <input 
-        type="text" 
-        className="form-control" 
-        value={state.todo} 
-        disabled 
+      <input
+        type="text"
+        className="form-control"
+        value={state.todo}
+        disabled
       />
     );
   }
 
+  let setDoneButton, editButton, removeButton;
+  if (showButton) {
+    setDoneButton = <button className="btn btn-outline-success" onClick={() => buttonDone({ word: title })}>
+      Set as done
+    </button>
+    editButton =    <button
+    className="btn btn-outline-info"
+    onClick={edit}
+  >
+    {state.button}
+  </button>
+    removeButton = <button
+    className="btn btn-outline-danger"
+    onClick={() => buttonDelete(index)}
+  >
+    Remove
+  </button>
+  }
+  
   return (
     <div className="card" id="card">
       <div className="card-body">
@@ -67,21 +87,9 @@ const Card: React.FC<CardProps> = ({ title, index, buttonDelete, buttonDone }) =
         <div className="input-group mb-3">
           {element}
           <div className="input-group-append col-xs-4">
-            <button className="btn btn-outline-success" onClick={() => buttonDone({ word: title })}>
-              Set as done
-            </button>
-            <button 
-              className="btn btn-outline-info" 
-              onClick={edit}
-            >
-              {state.button}
-            </button>
-            <button 
-              className="btn btn-outline-danger" 
-              onClick={() => buttonDelete(index)}
-            >
-              Remove
-            </button>
+            {setDoneButton}
+            {editButton}
+            {removeButton}
           </div>
         </div>
       </div>

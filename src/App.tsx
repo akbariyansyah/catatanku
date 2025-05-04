@@ -10,7 +10,7 @@ const App: React.FC<AppProps> = () => {
   const [state, setState] = useState({
     title: "",
     showCard: false,
-    values: [] as TodoItem[],
+    inProgressTodos: [] as TodoItem[],
     doneTodos: [] as TodoItem[],
   });
 
@@ -23,16 +23,16 @@ const App: React.FC<AppProps> = () => {
   };
 
   const remove = (index: number) => {
-    swal("Anda yakin ingin menghapus to-do ini ?", {
-      buttons: ["ga jadi", "Oke..."],
+    swal("Are you sure ?", {
+      buttons: ["Cancel", "Delete"],
     }).then((willDelete) => {
       if (willDelete) {
-        const updatedScreen = [...state.values];
+        const updatedScreen = [...state.inProgressTodos];
         updatedScreen.splice(index, 1);
         
         setState({
           ...state,
-          values: updatedScreen
+          inProgressTodos: updatedScreen
         });
 
       }
@@ -40,13 +40,13 @@ const App: React.FC<AppProps> = () => {
   };
 
   const clear = () => {
-    swal("anda yakin ingin menghapus semua to-do ?", {
-      buttons: ["ga jadi", "Oke..."],
+    swal("Are you sure ?", {
+      buttons: ["Cancel", "Delete"],
     }).then((willDelete) => {
       if (willDelete) {
         setState({
           ...state,
-          values: []
+          inProgressTodos: []
         });
       }
     });
@@ -54,18 +54,18 @@ const App: React.FC<AppProps> = () => {
 
   const add = () => {
     if (state.title === "") {
-      swal("Input tidak boleh kosong !");
+      swal("Input cannot be empty !");
     } else {
       // Create a new array instead of mutating the existing one
       const updatedScreen = [
-        ...state.values,
+        ...state.inProgressTodos,
         { word: state.title }
       ];
       
       setState({
         ...state,
         showCard: true,
-        values: updatedScreen,
+        inProgressTodos: updatedScreen,
         title: ""
       });
     }
@@ -75,19 +75,20 @@ const App: React.FC<AppProps> = () => {
     setState({
       ...state,
       doneTodos: [...state.doneTodos, { word: todo.word }],
-      values: state.values.filter(item => item.word !== todo.word) // Remove from values
+      inProgressTodos: state.inProgressTodos.filter(item => item.word !== todo.word) // Remove from values
     });
   }
 
   let progressCards, doneCards;
   if (state.showCard) {
-    progressCards = state.values.map((data, index) => 
+    progressCards = state.inProgressTodos.map((data, index) => 
       <Card 
         key={index} 
         title={data.word} 
         index={index} 
         buttonDelete={remove} 
         buttonDone={done}
+        showButton={true}
       />
     );
   }
@@ -100,6 +101,7 @@ const App: React.FC<AppProps> = () => {
         index={index} 
         buttonDelete={remove} 
         buttonDone={done}
+        showButton={false}
       />
     );
   }
@@ -147,7 +149,7 @@ const App: React.FC<AppProps> = () => {
       <div className="card mt-3 mb-3">
         <div className="card-body">
           <div className="display-4">
-            Done list :
+            Done list :  <b>{state.doneTodos.length}</b>
           </div>
         </div>
       </div>
