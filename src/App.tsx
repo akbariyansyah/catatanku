@@ -3,10 +3,25 @@ import Card from './Card';
 import Header from './Header';
 import swal from 'sweetalert';
 import { TodoItem, AppProps } from './types/todo';
+import ModalComponent from './components/Modal';
 
 
 
 const App: React.FC<AppProps> = () => {
+  // Handle Modal
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  // Functions to handle modal open/close
+  const handleCloseModal = (): void => setShowModal(false);
+  const handleShowModal = (): void => setShowModal(true);
+
+  // Custom action to perform when primary button is clicked
+  const handleSaveChanges = (): void => {
+    console.log('Changes saved!');
+    // Additional logic here - API calls, data updates, etc.
+  };
+
+
   const [state, setState] = useState({
     title: "",
     showCard: false,
@@ -29,7 +44,7 @@ const App: React.FC<AppProps> = () => {
       if (willDelete) {
         const updatedScreen = [...state.inProgressTodos];
         updatedScreen.splice(index, 1);
-        
+
         setState({
           ...state,
           inProgressTodos: updatedScreen
@@ -61,7 +76,7 @@ const App: React.FC<AppProps> = () => {
         ...state.inProgressTodos,
         { word: state.title }
       ];
-      
+
       setState({
         ...state,
         showCard: true,
@@ -81,12 +96,12 @@ const App: React.FC<AppProps> = () => {
 
   let progressCards, doneCards;
   if (state.showCard) {
-    progressCards = state.inProgressTodos.map((data, index) => 
-      <Card 
-        key={index} 
-        title={data.word} 
-        index={index} 
-        buttonDelete={remove} 
+    progressCards = state.inProgressTodos.map((data, index) =>
+      <Card
+        key={index}
+        title={data.word}
+        index={index}
+        buttonDelete={remove}
         buttonDone={done}
         showButton={true}
       />
@@ -95,11 +110,11 @@ const App: React.FC<AppProps> = () => {
 
   if (state.doneTodos.length > 0) {
     doneCards = state.doneTodos.map((data, index) =>
-      <Card 
-        key={index} 
-        title={data.word} 
-        index={index} 
-        buttonDelete={remove} 
+      <Card
+        key={index}
+        title={data.word}
+        index={index}
+        buttonDelete={remove}
         buttonDone={done}
         showButton={false}
       />
@@ -112,28 +127,45 @@ const App: React.FC<AppProps> = () => {
       <div className="card" id="card">
         <div className="card-body">
           <div className="input-group mb-3">
-            <input 
-              type="text" 
-              className="inputForm" 
-              name="title" 
-              placeholder="input new to-do..." 
-              autoComplete="off" 
-              value={state.title} 
-              onChange={handleInputChange} 
+            <input
+              type="text"
+              className="inputForm"
+              name="title"
+              placeholder="input new to-do..."
+              autoComplete="off"
+              value={state.title}
+              onChange={handleInputChange}
             />
             <div className="input-group-append col-xs-4">
-              <button 
-                className="btn btn-outline-primary btn-lg" 
+              <button
+                className="btn btn-primary btn-lg"
                 onClick={add}
               >
                 Add Todo's
               </button>
-              <button 
-                className="btn btn-outline-warning btn-lg" 
+              <button
+                className="btn btn-warning btn-lg"
                 onClick={clear}
               >
                 Clear Todo's
               </button>
+              <button
+                className="btn btn-info btn-lg"
+                onClick={handleShowModal}
+              >
+                Create Cycle
+              </button>
+              <ModalComponent
+                show={showModal}
+                handleClose={handleCloseModal}
+                title="Cycle Modal"
+                primaryButtonText="Save & Close"
+                secondaryButtonText="Cancel"
+                onPrimaryAction={handleSaveChanges}
+              >
+                <p>Create new cycle</p>
+                <p>Input start date and end date</p>
+              </ModalComponent>
             </div>
           </div>
         </div>
@@ -149,7 +181,7 @@ const App: React.FC<AppProps> = () => {
       <div className="card mt-3 mb-3">
         <div className="card-body">
           <div className="display-4">
-            Done list :  <b>{state.doneTodos.length}</b>
+            Done list :  <span><b>{state.doneTodos.length}</b></span>
           </div>
         </div>
       </div>
