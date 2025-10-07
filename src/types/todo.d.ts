@@ -5,9 +5,8 @@ export interface Todo {
     values: string[];
 }
 
-
 export interface TodoItem {
     word: string;
   }
-  
-  export interface AppProps {}
+
+export interface AppProps {}
