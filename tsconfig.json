@@ -24,6 +24,12 @@
       ]
     }
   },
+  "baseUrl": ".",
+  "paths": {
+    "@/*": [
+      "./*"
+    ]
+  },
   "include": [
     "./src",
     "./webpack.config.ts"
