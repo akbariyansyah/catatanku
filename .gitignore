@@ -1,0 +1,62 @@
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# build outputs
+/dist
+/build
+/out
+/.next
+/.nuxt
+
+# production envs & local configs
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc cache
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.yarn/patches
+/.turbo
+/.parcel-cache
+/.eslintcache
+/.stylelintcache
+/.vite
+/.vercel
+/.netlify
+/.firebase
+/.cache
+/tmp
+
+# test coverage
+/coverage
+
+# IDE & editor files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# local dev tools
+*.local
+*.env.backup
