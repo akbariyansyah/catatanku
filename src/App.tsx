@@ -1,6 +1,17 @@
-import React from "react";
-import HelloWorld from "components/HelloWorld";
 
-const App: React.FC = () => <HelloWorld />;
+import './App.css'
 
-export default App;
+function App() {
+  return (
+    <>
+      <div>
+        <h1 className="text-3xl font-bold underline">
+          Hello world!
+        </h1>
+      </div>
+
+    </>
+  )
+}
+
+export default App
