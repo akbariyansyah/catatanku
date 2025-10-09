@@ -1,13 +1,12 @@
 
-import './App.css'
+// import './App.css'
+import { NavigationMenuDemo } from './NavigationMenu'
 
 function App() {
   return (
     <>
-      <div>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1>
+      <div className='w-1000px mx-auto mt-10 p-5 rounded-lg'>
+       <NavigationMenuDemo />
       </div>
 
     </>
