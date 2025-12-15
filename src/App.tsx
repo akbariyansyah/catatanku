@@ -1,6 +1,6 @@
 
 import { Routes, Route } from "react-router-dom";
-import { NavigationMenuDemo } from './NavigationMenu'
+import { NavigationMenuDemo } from './components/layout/NavigationMenu'
 
 import { Home } from "./Home";
 import { Task } from "./Task";
